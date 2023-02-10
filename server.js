@@ -12,7 +12,7 @@ app.engine('jsx', require('express-react-views').createEngine());
 
 // ROUTES
 app.get('/', (req, res) => {
-	res.send('Welcome to my Bread...? App...');
+	res.send('<h1>Welcome to BreadCRUD!</h1> <p>An App about bread..</p>');
 });
 
 // BREAD DATA
