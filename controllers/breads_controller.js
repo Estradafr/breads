@@ -12,7 +12,13 @@ bread_router.get('/', (req, res) => {
 
 // SHOW
 bread_router.get('/:arrayIndex', (req, res) => {
-	res.send(bread_data[req.params.arrayIndex]);
+	if (bread_data[req.params.arrayIndex]) {
+		res.render('Show', {
+			bread: bread_data[req.params.arrayIndex],
+		});
+	} else {
+		res.send('404');
+	}
 });
 
 module.exports = bread_router;
