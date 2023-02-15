@@ -20,6 +20,7 @@ bread_router.get('/:arrayIndex', (req, res) => {
 	if (bread_data[req.params.arrayIndex]) {
 		res.render('Show', {
 			bread: bread_data[req.params.arrayIndex],
+			index: req.params.arrayIndex,
 		});
 	} else {
 		res.send('404');
@@ -39,6 +40,12 @@ bread_router.post('/', (req, res) => {
 	}
 	bread_data.push(req.body);
 	res.redirect('/breads');
+});
+
+// DELETE
+bread_router.delete('/:indexArray', (req, res) => {
+	bread_data.splice(req.params.indexArray, 1);
+	res.status(303).redirect('/breads');
 });
 
 module.exports = bread_router;
