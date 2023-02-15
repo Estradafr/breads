@@ -15,6 +15,14 @@ bread_router.get('/new', (req, res) => {
 	res.render('new');
 });
 
+// EDIT
+bread_router.get('/:indexArray/edit', (req, res) => {
+	res.render('edit', {
+		bread: bread_data[req.params.indexArray],
+		index: req.params.indexArray,
+	});
+});
+
 // SHOW
 bread_router.get('/:arrayIndex', (req, res) => {
 	if (bread_data[req.params.arrayIndex]) {
@@ -46,6 +54,17 @@ bread_router.post('/', (req, res) => {
 bread_router.delete('/:indexArray', (req, res) => {
 	bread_data.splice(req.params.indexArray, 1);
 	res.status(303).redirect('/breads');
+});
+
+// UPDATE
+bread_router.put('/:arrayIndex', (req, res) => {
+	if (req.body.hasGluten === 'on') {
+		req.body.hasGluten = true;
+	} else {
+		req.body.hasGluten = false;
+	}
+	bread_data[req.params.arrayIndex] = req.body;
+	res.redirect(`/breads/${req.params.arrayIndex}`);
 });
 
 module.exports = bread_router;
