@@ -18,13 +18,13 @@ app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 
 // MONGOOSE
-mongoose.set('strictQuery', true);
+mongoose.set({strictQuery: true});
 app.use(methodOverride('_method'));
 mongoose.connect(
 	MONGO_URI,
 	{useNewUrlParser: true, useUnifiedTopology: true},
 	() => {
-		console.log('connected to mongo: ', process.env.MONGO_URI);
+		console.log('Connected to:', MONGO_URI);
 	}
 );
 
