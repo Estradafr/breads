@@ -7,6 +7,8 @@ const methodOverride = require('method-override');
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT;
+const mongoose = require('mongoose');
+const MONGO_URI = process.env.MONGO_URI;
 
 // MIDDLEWARE
 app.set('views', __dirname + '/views');
@@ -14,7 +16,17 @@ app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
+
+// MONGOOSE
+mongoose.set('strictQuery', true);
 app.use(methodOverride('_method'));
+mongoose.connect(
+	MONGO_URI,
+	{useNewUrlParser: true, useUnifiedTopology: true},
+	() => {
+		console.log('connected to mongo: ', process.env.MONGO_URI);
+	}
+);
 
 // ROUTES
 app.get('/', (req, res) => {
