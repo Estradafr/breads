@@ -2,6 +2,11 @@ const express = require('express');
 const bread_router = express.Router();
 const bread_data = require('../models/bread.js');
 
+// NEW
+bread_router.get('/new', (req, res) => {
+	res.render('new');
+});
+
 // INDEX
 bread_router.get('/', (req, res) => {
 	bread_data.find().then((foundBread_data) => {
@@ -12,31 +17,11 @@ bread_router.get('/', (req, res) => {
 	});
 });
 
-// NEW
-bread_router.get('/new', (req, res) => {
-	res.render('new');
-});
-
 // EDIT
 bread_router.get('/:id/edit', (req, res) => {
-	res.render('edit', {
-		bread: bread_data[req.params.id],
-		index: req.params.id,
+	bread_data.findById(req.params.id).then((foundBread_data) => {
+		res.render('edit', {bread: foundBread_data});
 	});
-});
-
-// SHOW
-bread_router.get('/:id', (req, res) => {
-	bread_data
-		.findById(req.params.id)
-		.then((foundBread_data) => {
-			res.render('show', {
-				bread: foundBread_data,
-			});
-		})
-		.catch((err) => {
-			res.send('404');
-		});
 });
 
 // CREATE
@@ -53,21 +38,40 @@ bread_router.post('/', (req, res) => {
 	res.redirect('/breads');
 });
 
-// DELETE
-bread_router.delete('/:indexArray', (req, res) => {
-	bread_data.splice(req.params.indexArray, 1);
-	res.status(303).redirect('/breads');
+// SHOW
+bread_router.get('/:id', (req, res) => {
+	bread_data
+		.findById(req.params.id)
+		.then((foundBread_data) => {
+			res.render('show', {
+				bread: foundBread_data,
+			});
+		})
+		.catch((err) => {
+			res.send('404');
+		});
 });
 
 // UPDATE
-bread_router.put('/:arrayIndex', (req, res) => {
+bread_router.put('/:id', (req, res) => {
 	if (req.body.hasGluten === 'on') {
 		req.body.hasGluten = true;
 	} else {
 		req.body.hasGluten = false;
 	}
-	bread_data[req.params.arrayIndex] = req.body;
-	res.redirect(`/breads/${req.params.arrayIndex}`);
+	bread_data
+		.findByIdAndUpdate(req.params.id, req.body, {new: true})
+		.then((updatedBread_data) => {
+			console.log(updatedBread_data);
+			res.redirect(`/breads/${req.params.id}`);
+		});
+});
+
+// DELETE
+bread_router.delete('/:id', (req, res) => {
+	bread_data.findByIdAndDelete(req.params.id).then((deletedBread_data) => {
+		res.status(303).redirect('/breads');
+	});
 });
 
 module.exports = bread_router;
