@@ -29,6 +29,19 @@ function New() {
 					id="hasGluten"
 					defaultChecked
 				/>
+				<label htmlFor="baker">Baker</label>
+				<select
+					name="baker"
+					id="baker"
+				>
+					<option value="Spiderman">Spiderman</option>
+					<option value="Iron-Man">Iron-Man</option>
+					<option value="Captain America">Captain America</option>
+					<option value="Thor">Thor</option>
+					<option value="Hulk">Hulk</option>
+					<option value="Black Panther">Black Panther</option>
+				</select>
+
 				<br />
 				<input type="submit" />
 			</form>
