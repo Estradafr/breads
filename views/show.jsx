@@ -16,9 +16,9 @@ function Show({bread}) {
 				src={bread.image}
 				alt={bread.name}
 			/>
-			<p>Baked by {bread.baker} </p>
+			<p>{bread.getBakedby()} </p>
 			<form
-				action={`/breads/${bread.id}?_method=DELETE`}
+				action={`/breads/${bread._id}?_method=DELETE`}
 				method="POST"
 			>
 				<input
@@ -26,7 +26,7 @@ function Show({bread}) {
 					value="DELETE"
 				/>
 			</form>
-			<a href={`/breads/${bread.id}/edit`}>
+			<a href={`/breads/${bread._id}/edit`}>
 				<button>Edit</button>
 			</a>
 

@@ -14,6 +14,11 @@ const breadSchema = new Schema({
 	},
 });
 
+// Helper Methods
+breadSchema.methods.getBakedby = function () {
+	return `${this.name} was baked with love by ${this.baker}`;
+};
+
 // Model and Exports
 const bread_data = mongoose.model('bread_data', breadSchema);
 module.exports = bread_data;

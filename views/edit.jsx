@@ -6,7 +6,7 @@ function Edit({bread}) {
 		<Default>
 			<h2>Edit a bread</h2>
 			<form
-				action={`/breads/${bread.id}?_method=PUT`}
+				action={`/breads/${bread._id}?_method=PUT`}
 				method="POST"
 			>
 				<label htmlFor="name">Name</label>
