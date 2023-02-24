@@ -1,7 +1,7 @@
 const React = require('react');
 const Default = require('./layouts/Default');
 
-function Edit({bread}) {
+function Edit({bread, bakers}) {
 	return (
 		<Default>
 			<h2>Edit a bread</h2>
@@ -17,13 +17,6 @@ function Edit({bread}) {
 					defaultValue={bread.name}
 					required
 				/>
-				<label htmlFor="image">Image</label>
-				<input
-					type="text"
-					name="image"
-					id="image"
-					defaultValue={bread.image}
-				/>
 				<label htmlFor="hasGluten">Has Gluten?</label>
 				<input
 					type="checkbox"
@@ -31,20 +24,32 @@ function Edit({bread}) {
 					id="hasGluten"
 					defaultChecked={bread.hasGluten}
 				/>
-				<br />
-				<input type="submit" />
+				<label htmlFor="image">Image</label>
+				<input
+					type="text"
+					name="image"
+					id="image"
+					defaultValue={bread.image}
+				/>
 				<label htmlFor="baker">Baker</label>
 				<select
 					name="baker"
 					id="baker"
+					defaultValue={bread.baker}
 				>
-					<option value="Spiderman">Spiderman</option>
-					<option value="Iron-Man">Iron-Man</option>
-					<option value="Captain America">Captain America</option>
-					<option value="Thor">Thor</option>
-					<option value="Hulk">Hulk</option>
-					<option value="Black Panther">Black Panther</option>
+					{bakers.map((baker) => {
+						return (
+							<option
+								value={baker.id}
+								key={baker.id}
+							>
+								{baker.name}
+							</option>
+						);
+					})}
 				</select>
+				<br />
+				<input type="submit" />
 			</form>
 		</Default>
 	);
