@@ -20,10 +20,13 @@ bread_router.get('/seeder', (req, res) => {
 
 // INDEX
 bread_router.get('/', (req, res) => {
-	bread_data.find().then((foundBread_data) => {
-		res.render('index', {
-			breads: foundBread_data,
-			title: 'Index Page',
+	Baker.find().then((foundBakers) => {
+		bread_data.find().then((foundBread_data) => {
+			res.render('index', {
+				breads: foundBread_data,
+				bakers: foundBakers,
+				title: 'Index Page',
+			});
 		});
 	});
 });
