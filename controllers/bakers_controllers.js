@@ -5,8 +5,22 @@ const Baker = require('../models/baker.js');
 const bakerSeedData = require('../models/baker_seed.js');
 
 // GET
-baker.get('/data/seed', (req, res) => {
-	Baker.insertMany(bakerSeedData).then(res.redirect('/breads'));
+baker.get('/data/seed', async (req, res) => {
+	await Baker.find().then((foundBakers) => {
+		foundBakers.forEach((deletedBaker) => {
+			Baker.findByIdAndDelete(deletedBaker._id).then((oldBaker) => {
+				console.log(oldBaker);
+			});
+		});
+	});
+
+	let foundBakers = await Baker.find();
+	foundBakers.forEach(async (deletedBaker) => {
+		await Baker.findByIdAndDelete(deletedBaker.id);
+	});
+
+	await Baker.insertMany(bakerSeedData);
+	await res.redirect('/breads');
 });
 
 // INDEX
@@ -21,7 +35,10 @@ baker.get('/', (req, res) => {
 // SHOW:
 baker.get('/:id', (req, res) => {
 	Baker.findById(req.params.id)
-		.populate('breads')
+		.populate({
+			path: 'breads',
+			options: {limit: 6},
+		})
 		.then((foundBaker) => {
 			res.render('bakerShow', {
 				baker: foundBaker,

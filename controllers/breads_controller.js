@@ -19,15 +19,13 @@ bread_router.get('/seeder', (req, res) => {
 });
 
 // INDEX
-bread_router.get('/', (req, res) => {
-	Baker.find().then((foundBakers) => {
-		bread_data.find().then((foundBread_data) => {
-			res.render('index', {
-				breads: foundBread_data,
-				bakers: foundBakers,
-				title: 'Index Page',
-			});
-		});
+bread_router.get('/', async (req, res) => {
+	const foundBakers = await Baker.find().lean();
+	const foundBreads = await bread_data.find().limit(6).lean();
+	res.render('index', {
+		breads: foundBreads,
+		bakers: foundBakers,
+		title: 'Index Page',
 	});
 });
 

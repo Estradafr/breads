@@ -15,11 +15,11 @@ function Show({baker}) {
 			<h3>Here are some of the breads {baker.name} has baked:</h3>
 			<ul>
 				{baker.breads.map((bread) => {
-					return <li key={bread.id}>{bread.name}</li>;
+					return <li key={bread._id}>{bread.name}</li>;
 				})}
 			</ul>
 			<form
-				action={`/bakers/${baker.id}?_method=DELETE`}
+				action={`/bakers/${baker._id}?_method=DELETE`}
 				method="POST"
 			>
 				<input
