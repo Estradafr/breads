@@ -20,7 +20,7 @@ baker.get('/data/seed', async (req, res) => {
 	});
 
 	await Baker.insertMany(bakerSeedData);
-	await res.redirect('/breads');
+	res.redirect('/breads');
 });
 
 // INDEX
